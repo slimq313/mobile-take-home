@@ -12,6 +12,7 @@ import XCTest
 class mobileTestTests: XCTestCase {
 
     override func setUp() {
+        super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
@@ -19,16 +20,21 @@ class mobileTestTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+    func testEpisodeViewModel() {
+        let episode = Episode.results(id: 0, name: "My episode name", air_date: "", episode: "", characters: ["character list"], url: "", created: "")
+        let episodeViewModel = EpisodeViewModel(epd: episode)
+        
+        XCTAssertEqual(episode.name, episodeViewModel.name)
+        XCTAssertEqual(episode.characters, episodeViewModel.characters)
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
-
+    
+    func testCharactersViewModel() {
+        let character = Characters.payLoad(id: 0, name: "Centaur", status: "Unknown", species: "", type: "", gender: "Male", image: "", url: "", created: "", origin: Characters.origin.init(name: "", url: "www.google.com"), location: Characters.location.init(name: "", url: ""), episode: [])
+        let characterViewModel = CharactersViewModel(character: character)
+        
+        XCTAssertEqual(character.name, characterViewModel.name)
+        XCTAssertEqual(character.status, characterViewModel.status)
+        XCTAssertEqual(character.origin?.url, characterViewModel.origin)
+    }
 }
