@@ -10,13 +10,20 @@ import UIKit
 
 class CharactersController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
+    // MARK: - Properties
+    
     let cellId = "CharactersCell"
-    private var charactersDetailController = "CharacterDetailController"
-    var charactersArray: [String]?
-    var characterDetails: CharactersViewModel?
     var characterArray = [Characters.payLoad]()
-    var characterViewModels = [CharactersViewModel]() 
+    var charactersArray: [String]?
+    private var charactersDetailController = "CharacterDetailController"
+    fileprivate  var characterDetails: CharactersViewModel?
+    fileprivate var characterViewModels = [CharactersViewModel]()
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak var characterTable: UITableView!
+    
+    // MARK: - Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +35,9 @@ class CharactersController: UIViewController, UITableViewDelegate, UITableViewDa
         characterArray.removeAll()
     }
     
-    func getCharacters() {
+    // MARK: - Implementations
+    
+    private func getCharacters() {
         for character in charactersArray! {
             APIManager.shared.dataManagerCall(method: .get, urlString: character, params: nil, headers: nil) {  [weak self] (verify: Characters.payLoad) in
                 self?.characterArray.append(verify)
@@ -38,6 +47,8 @@ class CharactersController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
+    
+    // MARK: - Delegates
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return characterViewModels.count
@@ -55,9 +66,21 @@ class CharactersController: UIViewController, UITableViewDelegate, UITableViewDa
         self.performSegue(withIdentifier: charactersDetailController, sender: self)
     }
 
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            characterTable.beginUpdates()
+            characterViewModels.remove(at: indexPath.row)
+            characterTable.deleteRows(at: [indexPath], with: .automatic)
+            characterTable.endUpdates()
+        }
+    }
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == charactersDetailController {
             let characterDetail = segue.destination as? CharacterDetailController

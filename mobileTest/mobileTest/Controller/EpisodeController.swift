@@ -10,18 +10,25 @@ import UIKit
 
 class EpisodeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    // MARK: - Outlets
+    
     @IBOutlet weak var episodeTableView: UITableView!
 
-    var charactersArray: [String]?
-    var episodeViewModels = [EpisodeViewModel]() 
+    // MARK: - Properties
+    
     let cellId = "EpisodeCell"
+    var charactersArray: [String]?
+    fileprivate var episodeViewModels = [EpisodeViewModel]()
     private var charactersController = "CharactersController"
+    
+    // MARK: - Overrides
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         getEpisodes()
     }
+    
+    // MARK: - Implementations
     
     func getEpisodes() {
         let episodeUrl = BaseAPIClient.urlFromPath(path: APIEndPoints.constants.getEpisode)
@@ -33,6 +40,8 @@ class EpisodeController: UIViewController, UITableViewDelegate, UITableViewDataS
             self?.episodeTableView.reloadData()
         }
     }
+    
+    // MARK: - Delegates
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodeViewModels.count
@@ -49,6 +58,8 @@ class EpisodeController: UIViewController, UITableViewDelegate, UITableViewDataS
         charactersArray = episodeViewModels[indexPath.row].characters
         self.performSegue(withIdentifier: charactersController, sender: self)
     }
+    
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == charactersController {

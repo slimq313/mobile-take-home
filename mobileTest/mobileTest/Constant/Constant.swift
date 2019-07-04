@@ -27,6 +27,5 @@ struct APIEndPoints {
         
         //Episodes
         static let getEpisode = "/episode"
-
     }
 }

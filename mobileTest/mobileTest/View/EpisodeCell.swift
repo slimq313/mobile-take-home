@@ -10,8 +10,12 @@ import UIKit
 
 class EpisodeCell: UITableViewCell {
 
+    // MARK: - Outlets
+    
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var episode: UILabel!
+    
+    // MARK: - Operations
     
     var episodeViewModel: EpisodeViewModel! {
         didSet {
@@ -19,6 +23,8 @@ class EpisodeCell: UITableViewCell {
             episode.text = episodeViewModel.episode
         }
     }
+    
+    // MARK: - Overrides
     
     override func awakeFromNib() {
         super.awakeFromNib()

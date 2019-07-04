@@ -10,7 +10,11 @@ import UIKit
 
 class CharacterDetailController: UIViewController {
 
+    // MARK: - Properties
+    
     var characterDetails: CharactersViewModel?
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var characterImage: UIImageView!
     @IBOutlet weak var name: UILabel!
@@ -18,10 +22,14 @@ class CharacterDetailController: UIViewController {
     @IBOutlet weak var gender: UILabel!
     @IBOutlet weak var dateCreated: UILabel!
     
+    // MARK: - Overrides
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateDetailUI()
     }
+    
+    // MARK: - Operations
     
     func updateDetailUI() {
         name.text = characterDetails?.name

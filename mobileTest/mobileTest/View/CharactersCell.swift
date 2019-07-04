@@ -10,10 +10,16 @@ import UIKit
 
 class CharactersCell: UITableViewCell {
 
-    let status = "Alive"
+    // MARK: - Overrides
+    
+    fileprivate var status = "Alive"
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var characterStatus: UILabel!
+    
+    // MARK: - Operations
     
     var characterViewModel: CharactersViewModel! {
         didSet {
@@ -28,6 +34,8 @@ class CharactersCell: UITableViewCell {
         }
     }
     
+    // MARK: - Overrides
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,7 +44,5 @@ class CharactersCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
-
 }
